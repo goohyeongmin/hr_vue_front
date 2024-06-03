@@ -76,6 +76,7 @@ const filteredEmpList = computed(() => {
           :headers="headers"
           :items="filteredEmpList"
           :items-per-page="10"
+          show-select
         />
       </VCardText>
     </VCard>
