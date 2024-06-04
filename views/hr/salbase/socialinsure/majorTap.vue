@@ -1,151 +1,153 @@
 <script lang="ts" setup>
-import { baseStore } from '@/store/hr/base';
-import { salaryStore } from '@/store/hr/salary';
-import { VDataTable } from 'vuetify/labs/VDataTable';
+import { baseStore } from "@/store/hr/base";
+import { salaryStore } from "@/store/hr/salary";
+import { VDataTable } from "vuetify/labs/VDataTable";
 
-const baseInsureList = ref(salaryStore().baseInsureList)
-const selectedYear = ref(baseStore().selectYear)
+const baseInsureList = ref(salaryStore().baseInsureList);
+const selectedYear = ref(baseStore().selectYear);
 
 const majorheaders = [
-  { title: '비고', key: 'note', sortable: false },
-  { title: '연금보험료(전체)(%)', key: 'nationalPension', sortable: false },
-  { title: '근로자(%)', key: 'empNation', sortable: false },
-  { title: '사업주(%)', key: 'workNation', sortable: false },
-]
+  { title: "비고", key: "note", sortable: false },
+  { title: "연금보험료(전체)(%)", key: "nationalPension", sortable: false },
+  { title: "근로자(%)", key: "empNation", sortable: false },
+  { title: "사업주(%)", key: "workNation", sortable: false },
+];
 
 const nationalheaders = [
-  { title: '구분', key: 'note', sortable: false },
-  { title: '기준액', key: 'standard', sortable: false },
-  { title: '보험료율', key: 'insureRate', sortable: false },
-  { title: '근로자(%)', key: 'empHealth', sortable: false },
-  { title: '사업주(%)', key: 'workHealth', sortable: false },
-]
+  { title: "구분", key: "note", sortable: false },
+  { title: "기준액", key: "standard", sortable: false },
+  { title: "보험료율", key: "insureRate", sortable: false },
+  { title: "근로자(%)", key: "empHealth", sortable: false },
+  { title: "사업주(%)", key: "workHealth", sortable: false },
+];
 
 const Healthheaders = [
-  { title: '구분', key: 'note', sortable: false },
-  { title: '보험료율(%)', key: 'standard', sortable: false },
-  { title: '근로자(%)', key: 'empInsure', sortable: false },
-  { title: '사업자(%)', key: 'workInsure', sortable: false },
-]
+  { title: "구분", key: "note", sortable: false },
+  { title: "보험료율(%)", key: "standard", sortable: false },
+  { title: "근로자(%)", key: "empInsure", sortable: false },
+  { title: "사업자(%)", key: "workInsure", sortable: false },
+];
 
 const preexistingheaders = [
-  { title: '구분', key: 'note', sortable: false },
-  { title: '요율(%)', key: 'industRate', sortable: false },
-]
+  { title: "구분", key: "note", sortable: false },
+  { title: "요율(%)", key: "industRate", sortable: false },
+];
 
 const newNationPension = computed(() => [
   {
-    note: '기준 소득월액',
-    nationalPension: baseInsureList.value.nationpensionRates,
-    empNation: baseInsureList.value.nationpensionRates / 2,
-    workNation: baseInsureList.value.nationpensionRates / 2,
+    note: "기준 소득월액",
+    nationalPension: baseInsureList.value.nationPensionRates,
+    empNation: baseInsureList.value.nationPensionRates / 2,
+    workNation: baseInsureList.value.nationPensionRates / 2,
   },
-])
+]);
 
 const newHealthInsure = computed(() => [
   {
-    note: '건강보험료',
-    standard: '보수월액',
-    insureRate: baseInsureList.value.healthinsureRates,
-    empHealth: baseInsureList.value.healthinsureRates / 2,
-    workHealth: baseInsureList.value.healthinsureRates / 2,
+    note: "건강보험료",
+    standard: "보수월액",
+    insureRate: baseInsureList.value.healthInsureRates,
+    empHealth: baseInsureList.value.healthInsureRates / 2,
+    workHealth: baseInsureList.value.healthInsureRates / 2,
   },
   {
-    note: '장기요양보험료',
-    standard: '건강보험료',
-    insureRate: baseInsureList.value.longtermcareRate,
-    empHealth: baseInsureList.value.longtermcareRate / 2,
-    workHealth: baseInsureList.value.longtermcareRate / 2,
+    note: "장기요양보험료",
+    standard: "건강보험료",
+    insureRate: baseInsureList.value.longTermCareRate,
+    empHealth: baseInsureList.value.longTermCareRate / 2,
+    workHealth: baseInsureList.value.longTermCareRate / 2,
   },
-])
+]);
 
 const newEmpInsure = computed(() => [
   {
-    note: '실업급여',
-    standard: baseInsureList.value.wrkinsureRates,
-    empInsure: baseInsureList.value.wrkinsureRates / 2,
-    workInsure: baseInsureList.value.wrkinsureRates / 2,
+    note: "실업급여",
+    standard: baseInsureList.value.wrkInsureRates,
+    empInsure: baseInsureList.value.wrkInsureRates / 2,
+    workInsure: baseInsureList.value.wrkInsureRates / 2,
   },
   {
-    note: '고용안정, 직업능력 개발사업(150인미만)',
+    note: "고용안정, 직업능력 개발사업(150인미만)",
     standard: baseInsureList.value.jobstabilRates,
-    empInsure: '-',
+    empInsure: "-",
     workInsure: baseInsureList.value.jobstabilRates,
   },
-])
+]);
 
 const newIndustInsure = computed(() => [
   {
-    note: '업종요율(전기기계기구·정밀기구·전자제품 제조업)',
-    industRate: baseInsureList.value.industinsureRates,
+    note: "업종요율(전기기계기구·정밀기구·전자제품 제조업)",
+    industRate: baseInsureList.value.industInsureRates,
   },
   {
-    note: '출퇴근재해요율',
-    industRate: baseInsureList.value.industinsurecharRates,
+    note: "출퇴근재해요율",
+    industRate: baseInsureList.value.industInsureCharRates,
   },
-])
+]);
 
 const addNationalPension = async () => {
   const addSocialInsure = {
     nationpensionRates: newNationPension.value[0].nationalPension,
     attributionYear: selectedYear.value,
-  }
+  };
 
-  console.log(addSocialInsure)
+  console.log(addSocialInsure);
 
-  await salaryStore().ADD_SOCIAL_INSURE(addSocialInsure)
-}
+  await salaryStore().ADD_SOCIAL_INSURE(addSocialInsure);
+};
 
 const addHealthInsure = () => {
   const addSocialInsure = {
     healthinsureRates: newHealthInsure.value[0].insureRate,
     longtermcareRate: newHealthInsure.value[1].insureRate,
     attributionYear: selectedYear.value,
-  }
+  };
 
-  salaryStore().ADD_SOCIAL_INSURE(addSocialInsure)
-}
+  salaryStore().ADD_SOCIAL_INSURE(addSocialInsure);
+};
 
 const addEmpInsure = () => {
   const addSocialInsure = {
     wrkinsureRates: newEmpInsure.value[0].standard,
     jobstabilRates: newEmpInsure.value[1].standard,
     attributionYear: selectedYear.value,
-  }
+  };
 
-  salaryStore().ADD_SOCIAL_INSURE(addSocialInsure)
-}
+  salaryStore().ADD_SOCIAL_INSURE(addSocialInsure);
+};
 
 const addIndustInsure = () => {
   const addSocialInsure = {
     industinsureRates: newIndustInsure.value[0].industRate,
     industinsurecharRates: newIndustInsure.value[1].industRate,
     attributionYear: selectedYear.value,
+  };
+
+  salaryStore().ADD_SOCIAL_INSURE(addSocialInsure);
+};
+
+watch(
+  () => baseStore().selectYear,
+  (newValue) => {
+    selectedYear.value = newValue;
   }
+);
 
-  salaryStore().ADD_SOCIAL_INSURE(addSocialInsure)
-}
-
-watch(() => baseStore().selectYear, newValue => {
-  selectedYear.value = newValue
-})
-
-watch(() => salaryStore().baseInsureList, newValue => {
-  baseInsureList.value = newValue
-})
+watch(
+  () => salaryStore().baseInsureList,
+  (newValue) => {
+    baseInsureList.value = newValue;
+  }
+);
 </script>
 
 <template>
   <VContainer class="mb-6">
     <VCardText class="d-flex flex-wrap py-4 gap-4">
-      <h1 class="text-h3">
-        국민연금
-      </h1>
+      <h1 class="text-h3">국민연금</h1>
       <VSpacer />
       <div class="app-user-search-filter d-flex align-center flex-wrap gap-4">
-        <VBtn @click="addNationalPension">
-          국민연금 기준 등록
-        </VBtn>
+        <VBtn @click="addNationalPension"> 국민연금 기준 등록 </VBtn>
       </div>
     </VCardText>
     <VDivider />
@@ -164,18 +166,18 @@ watch(() => salaryStore().baseInsureList, newValue => {
       </template>
     </VDataTable>
     <VCardText class="d-flex flex-wrap py-4 gap-4">
-      <h1 class="text-h3">
-        건강보험
-      </h1>
+      <h1 class="text-h3">건강보험</h1>
       <VSpacer />
       <div class="app-user-search-filter d-flex align-center flex-wrap gap-4">
-        <VBtn @click="addHealthInsure">
-          건강보험 기준 등록
-        </VBtn>
+        <VBtn @click="addHealthInsure"> 건강보험 기준 등록 </VBtn>
       </div>
     </VCardText>
     <VDivider />
-    <VDataTable class="mb-12" :headers="nationalheaders" :items="newHealthInsure">
+    <VDataTable
+      class="mb-12"
+      :headers="nationalheaders"
+      :items="newHealthInsure"
+    >
       <template #item.insureRate="{ item }">
         <AppTextField v-model="item.insureRate" />
       </template>
@@ -190,14 +192,10 @@ watch(() => salaryStore().baseInsureList, newValue => {
       </template>
     </VDataTable>
     <VCardText class="d-flex flex-wrap py-4 gap-4">
-      <h1 class="text-h3">
-        고용보험
-      </h1>
+      <h1 class="text-h3">고용보험</h1>
       <VSpacer />
       <div class="app-user-search-filter d-flex align-center flex-wrap gap-4">
-        <VBtn @click="addEmpInsure">
-          고용보험 기준 등록
-        </VBtn>
+        <VBtn @click="addEmpInsure"> 고용보험 기준 등록 </VBtn>
       </div>
     </VCardText>
     <VDivider />
@@ -216,18 +214,18 @@ watch(() => salaryStore().baseInsureList, newValue => {
       </template>
     </VDataTable>
     <VCardText class="d-flex flex-wrap py-4 gap-4">
-      <h1 class="text-h3">
-        산재보험
-      </h1>
+      <h1 class="text-h3">산재보험</h1>
       <VSpacer />
       <div class="app-user-search-filter d-flex align-center flex-wrap gap-4">
-        <VBtn @click="addIndustInsure">
-          산재보험 기준 등록
-        </VBtn>
+        <VBtn @click="addIndustInsure"> 산재보험 기준 등록 </VBtn>
       </div>
     </VCardText>
     <VDivider />
-    <VDataTable class="mb-12" :headers="preexistingheaders" :items="newIndustInsure">
+    <VDataTable
+      class="mb-12"
+      :headers="preexistingheaders"
+      :items="newIndustInsure"
+    >
       <template #item.industRate="{ item }">
         <AppTextField v-model="item.industRate" />
       </template>
