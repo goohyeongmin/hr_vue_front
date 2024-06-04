@@ -1,12 +1,12 @@
-import { fileURLToPath } from 'node:url'
-import vuetify from 'vite-plugin-vuetify'
+import { fileURLToPath } from "node:url";
+import vuetify from "vite-plugin-vuetify";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
     head: {
-      titleTemplate: '%s - NuxtJS Admin Template',
-      title: '772JO',
+      titleTemplate: "%s - NuxtJS Admin Template",
+      title: "79HR",
     },
   },
 
@@ -15,28 +15,32 @@ export default defineNuxtConfig({
   },
 
   css: [
-    '@core/scss/template/index.scss',
-    '@styles/styles.scss',
-    '@/plugins/iconify/icons.css',
+    "@core/scss/template/index.scss",
+    "@styles/styles.scss",
+    "@/plugins/iconify/icons.css",
   ],
 
   components: {
-    dirs: [{
-      path: '@/@core/components',
-      pathPrefix: false,
-    }, {
-      path: '~/components/global',
-      global: true,
-    }, {
-      path: '~/components',
-      pathPrefix: false,
-    }],
+    dirs: [
+      {
+        path: "@/@core/components",
+        pathPrefix: false,
+      },
+      {
+        path: "~/components/global",
+        global: true,
+      },
+      {
+        path: "~/components",
+        pathPrefix: false,
+      },
+    ],
   },
 
-  plugins: ['@/plugins/vuetify/index.ts', '@/plugins/iconify/index.ts'],
+  plugins: ["@/plugins/vuetify/index.ts", "@/plugins/iconify/index.ts"],
 
   imports: {
-    dirs: ['./@core/utils', './@core/composable/', './plugins/*/composables/*'],
+    dirs: ["./@core/utils", "./@core/composable/", "./plugins/*/composables/*"],
     presets: [],
   },
 
@@ -51,17 +55,17 @@ export default defineNuxtConfig({
     tsConfig: {
       compilerOptions: {
         paths: {
-          '@/*': ['../*'],
-          '@themeConfig': ['../themeConfig.ts'],
-          '@layouts/*': ['../@layouts/*'],
-          '@layouts': ['../@layouts'],
-          '@core/*': ['../@core/*'],
-          '@core': ['../@core'],
-          '@images/*': ['../assets/images/*'],
-          '@styles/*': ['../assets/styles/*'],
-          '@validators': ['../@core/utils/validators'],
-          '@db/*': ['../server/fake-db/*'],
-          '@api-utils/*': ['../server/utils/*'],
+          "@/*": ["../*"],
+          "@themeConfig": ["../themeConfig.ts"],
+          "@layouts/*": ["../@layouts/*"],
+          "@layouts": ["../@layouts"],
+          "@core/*": ["../@core/*"],
+          "@core": ["../@core"],
+          "@images/*": ["../assets/images/*"],
+          "@styles/*": ["../assets/styles/*"],
+          "@validators": ["../@core/utils/validators"],
+          "@db/*": ["../server/fake-db/*"],
+          "@api-utils/*": ["../server/utils/*"],
         },
       },
     },
@@ -75,25 +79,34 @@ export default defineNuxtConfig({
 
   vue: {
     compilerOptions: {
-      isCustomElement: tag => tag === 'swiper-container' || tag === 'swiper-slide',
+      isCustomElement: (tag) =>
+        tag === "swiper-container" || tag === "swiper-slide",
     },
   },
 
   vite: {
-    define: { 'process.env': {} },
+    define: { "process.env": {} },
 
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('.', import.meta.url)),
-        '@themeConfig': fileURLToPath(new URL('./themeConfig.ts', import.meta.url)),
-        '@core': fileURLToPath(new URL('./@core', import.meta.url)),
-        '@layouts': fileURLToPath(new URL('./@layouts', import.meta.url)),
-        '@images': fileURLToPath(new URL('./assets/images/', import.meta.url)),
-        '@styles': fileURLToPath(new URL('./assets/styles/', import.meta.url)),
-        '@configured-variables': fileURLToPath(new URL('./assets/styles/variables/_template.scss', import.meta.url)),
-        'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
-        '@db': fileURLToPath(new URL('./server/fake-db/', import.meta.url)),
-        '@api-utils': fileURLToPath(new URL('./server/utils/', import.meta.url)),
+        "@": fileURLToPath(new URL(".", import.meta.url)),
+        "@themeConfig": fileURLToPath(
+          new URL("./themeConfig.ts", import.meta.url)
+        ),
+        "@core": fileURLToPath(new URL("./@core", import.meta.url)),
+        "@layouts": fileURLToPath(new URL("./@layouts", import.meta.url)),
+        "@images": fileURLToPath(new URL("./assets/images/", import.meta.url)),
+        "@styles": fileURLToPath(new URL("./assets/styles/", import.meta.url)),
+        "@configured-variables": fileURLToPath(
+          new URL("./assets/styles/variables/_template.scss", import.meta.url)
+        ),
+        apexcharts: fileURLToPath(
+          new URL("node_modules/apexcharts-clevision", import.meta.url)
+        ),
+        "@db": fileURLToPath(new URL("./server/fake-db/", import.meta.url)),
+        "@api-utils": fileURLToPath(
+          new URL("./server/utils/", import.meta.url)
+        ),
       },
     },
 
@@ -102,16 +115,14 @@ export default defineNuxtConfig({
     },
 
     optimizeDeps: {
-      exclude: ['vuetify'],
-      entries: [
-        './**/*.vue',
-      ],
+      exclude: ["vuetify"],
+      entries: ["./**/*.vue"],
     },
 
     plugins: [
       vuetify({
         styles: {
-          configFile: 'assets/styles/variables/_vuetify.scss',
+          configFile: "assets/styles/variables/_vuetify.scss",
         },
       }),
       null,
@@ -119,8 +130,8 @@ export default defineNuxtConfig({
   },
 
   build: {
-    transpile: ['vuetify'],
+    transpile: ["vuetify"],
   },
 
-  modules: ['@vueuse/nuxt', '@nuxtjs/device', '@pinia/nuxt'],
-})
+  modules: ["@vueuse/nuxt", "@nuxtjs/device", "@pinia/nuxt"],
+});
