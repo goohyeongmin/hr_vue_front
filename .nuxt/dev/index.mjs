@@ -874,7 +874,7 @@ function createServerHead(options = {}) {
 
 const unheadPlugins = [];
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"titleTemplate":"%s - NuxtJS Admin Template","title":"772JO"};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"titleTemplate":"%s - NuxtJS Admin Template","title":"79HR"};
 
 const appRootId = "__nuxt";
 
