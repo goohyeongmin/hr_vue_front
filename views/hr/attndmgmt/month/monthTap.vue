@@ -40,20 +40,12 @@ const data = [
     attendTime: "0900",
     quitTime: "1800",
     workHour: "185",
-<<<<<<< HEAD
-    halfHoildayStatus: "0.5",
-    lateWhether: "1",
-    overWorkHour: "27",
-    nightWorkHour: "20",
-    earlyLeaveHour: "0",
-=======
     halfHoildayStatus: "0",
     lateWhether: "2",
     overWorkHour: "25",
-    nightWorkHour: "20",
-    earlyLeaveHour: "10",
->>>>>>> Attendence
-    leaveHour: "10",
+    nightWorkHour: "15",
+    earlyLeaveHour: "5",
+    leaveHour: "5",
     finalizeStatus: "N",
   },
 ];

@@ -17,17 +17,10 @@ const annualProps: AttenHeaders[] = [
 ];
 
 onMounted(() => {
-<<<<<<< HEAD
   makeYearMonths();
 });
 
 const makeYearMonths = () => {
-=======
-  makeMonths();
-});
-
-const makeMonths = () => {
->>>>>>> Attendence
   const years = [2021, 2022, 2023, 2024]; // 원하는 년도들을 배열로 저장
 
   years.forEach((year) => {
