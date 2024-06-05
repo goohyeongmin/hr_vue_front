@@ -3,7 +3,7 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 
 const accountData = {
-  avatarImg: '/_nuxt/assets/images/empImages/mandu.jpg',
+  avatarImg: "/_nuxt/assets/images/empImages/EMP-09.jpeg",
 }
 
 const isSuccessFunc = ref(false)
