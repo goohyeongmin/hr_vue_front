@@ -1,37 +1,15 @@
-<script lang="ts" setup>
+<!-- 이거 back단 만져야 함 -->
+<script setup lang="ts">
 import { paginationMeta } from "@/server/utils/paginationMeta";
-import { affairStore } from "@/store/hr/affair";
+import { baseStore } from "@/store/hr/base";
 import { salaryStore } from "@/store/hr/salary";
 import { VDataTable } from "vuetify/labs/VDataTable";
 
-const options = ref({
-  page: 1,
-  itemsPerPage: 5,
-  sortBy: [""],
-  sortDesc: [false],
-});
-
-const isSuccessFunc = ref(false);
-const isaddfaild = ref(false);
-const selectedEmp = ref("");
-const selectedDate = ref("");
-
-const selectedWork = computed(() => {
-  const hireDate = new Date(selectedEmp.value.hireDate);
-  const retireDate = new Date(selectedDate.value);
-  return Math.abs(
-    (retireDate.getTime() - hireDate.getTime()) / (1000 * 60 * 60 * 24)
-  );
-});
-
-const selectedDivision = ref("");
-const selectedRows = ref([]);
-const isDialogVisible = ref(false);
-const severanceList = ref([]);
-const allEmpList = ref([]);
-const empListData = ref([]);
-const dayData = ref([]);
-const division = [{ title: "퇴직금", value: "퇴직금" }];
+const search = ref("");
+const isSeverance = ref(false);
+const selectedYear = ref("");
+const severanceList: any = ref([]);
+const yearList: any = ref([]);
 
 const headers = [
   { title: "신청일", key: "applyDate", align: "center" },
@@ -43,65 +21,75 @@ const headers = [
   { title: "차인지금액", key: "realSeverancePay", align: "center" },
 ];
 
-const fetchData = async () => {
-  const date = new Date();
-  dayData.value = {
-    firstDay: `${date.getFullYear()}-1-1`,
-    today: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-  };
-  await salaryStore().FIND_SEVERANCE_PAY(dayData.value);
-  severanceList.value = salaryStore().severanceList;
-  console.log(dayData.value);
-  console.log(severanceList.value);
-};
+const options = ref({
+  page: 1,
+  itemsPerPage: 5,
+  sortBy: [""],
+  sortDesc: [false],
+});
 
-const findEmpList = async () => {
-  await affairStore().FETCH_ALL_EMP();
-  empListData.value = await affairStore().all_emp_list;
-  allEmpList.value = (await empListData.value)
-    ? Object.values(empListData.value).map((item) => {
-        return {
-          title: item.empName,
-          value: { empCode: item.empCode, hireDate: item.hireDate },
-        };
-      })
+const fetchData = async () => {
+  await useAsyncData(async () => {
+    await baseStore().FETCH_YEARLIST();
+  });
+
+  const yearListData = await baseStore().yearList;
+
+  yearList.value = yearListData
+    ? Object.values(yearListData).map((item) => item.year)
     : [];
 };
 
-const addSeverancePay = async () => {
-  const addSeverancePayData = {
-    workDays: selectedWork.value,
-    hireDate: new Date(selectedEmp.value.hireDate),
-    retireDate: new Date(selectedDate.value),
-    empCode: selectedEmp.value.empCode,
-    severanceType: selectedDivision.value,
-    applyDate: new Date(dayData.value.today),
-    firstDay: new Date(dayData.value.firstDay),
-    today: new Date(dayData.value.today),
-  };
+const fetchData2 = async () => {
+  console.log(selectedYear.value);
 
-  console.log(addSeverancePayData);
-  await salaryStore().ADD_SEVERANCE_PAY(addSeverancePayData);
-  await fetchData();
-  isDialogVisible.value = false;
-  if (selectedWork.value < 365) isaddfaild.value = true;
-  else isSuccessFunc.value = true;
+  if (selectedYear.value === "" || selectedYear.value == null) {
+    severanceList.value = [];
+  } else {
+    const findSalaryData = {
+      firstDay: `${selectedYear.value}-1-1`,
+      today: `${selectedYear.value}-12-31`,
+    };
+
+    await salaryStore().FIND_SEVERANCE_PAY(findSalaryData);
+
+    severanceList.value = await salaryStore().severanceList;
+  }
 };
 
-const deletebtn = async () => {
-  await salaryStore().DELETE_SEVERANCE(selectedRows.value[0]);
-  await fetchData();
-  isSuccessFunc.value = true;
-};
+const filteredData = computed(() => {
+  return severanceList.value.filter((emp: any) => {
+    return Object.values(emp).some((field) => {
+      if (typeof field === "string")
+        return field.toLowerCase().includes(search.value.toLowerCase());
 
-onBeforeMount(async () => {
-  fetchData();
-  findEmpList();
+      return false;
+    });
+  });
 });
+
+onBeforeMount(fetchData);
+watch([selectedYear], fetchData2);
 </script>
 
 <template>
-  <h1 class="mb-6">퇴직금 등록</h1>
+  <h1 class="mb-6">퇴직금 조회</h1>
+  <VCard class="mb-6">
+    <VCardText>
+      <VRow>
+        <VCol cols="12" sm="4">
+          <AppSelect
+            v-model="selectedYear"
+            label="해당 연도"
+            placeholder="해당 연도"
+            :items="yearList"
+            clearable
+            clear-icon="tabler-x"
+          />
+        </VCol>
+      </VRow>
+    </VCardText>
+  </VCard>
   <VCard>
     <VCardText class="d-flex flex-wrap py-4 gap-4">
       <div class="me-3 d-flex gap-3">
@@ -119,69 +107,25 @@ onBeforeMount(async () => {
         />
       </div>
       <VSpacer />
+
       <div class="app-user-search-filter d-flex align-center flex-wrap gap-4">
-        <VDialog v-model="isDialogVisible" max-width="600">
-          <!-- Dialog Activator -->
-          <template #activator="{ props }">
-            <VBtn v-bind="props" prepend-icon="tabler-plus"> 퇴직금 등록 </VBtn>
-          </template>
-          <!-- Dialog close btn -->
-          <DialogCloseBtn @click="isDialogVisible = !isDialogVisible" />
-          <!-- Dialog Content -->
-          <VCard title="퇴직금 등록">
-            <VCardText>
-              <VRow>
-                <VCol cols="12" sm="6">
-                  <AppSelect
-                    v-model="selectedEmp"
-                    :items="allEmpList"
-                    label="직원명"
-                  />
-                </VCol>
-                <VCol cols="12" sm="6">
-                  <AppTextField
-                    v-model="selectedDate"
-                    label="퇴직일"
-                    type="date"
-                  />
-                </VCol>
-                <VCol cols="12" sm="6">
-                  <AppTextField
-                    v-model="selectedWork"
-                    label="재직일수"
-                    disabled
-                  />
-                </VCol>
-                <VCol cols="12" sm="6">
-                  <AppSelect
-                    v-model="selectedDivision"
-                    :items="division"
-                    label="구분"
-                  />
-                </VCol>
-              </VRow>
-            </VCardText>
-            <VCardText class="d-flex justify-end flex-wrap gap-3 mt-2">
-              <VBtn @click="addSeverancePay"> 등록 </VBtn>
-            </VCardText>
-          </VCard>
-        </VDialog>
-        <VBtn prepend-icon="tabler-minus" @click="deletebtn">
-          퇴직금 삭제
-        </VBtn>
+        <!-- 👉 Search  -->
+        <div style="inline-size: 10rem">
+          <AppTextField
+            v-model="search"
+            placeholder="Search"
+            density="compact"
+          />
+        </div>
       </div>
     </VCardText>
     <VDivider />
     <VDataTable
-      v-model="selectedRows"
       :headers="headers"
-      :items="severanceList"
+      :items="filteredData"
       :items-per-page="options.itemsPerPage"
       :page="options.page"
       :options="options"
-      item-value="empCode"
-      show-select
-      singel-select
     >
       <template #bottom>
         <VDivider />
@@ -193,44 +137,31 @@ onBeforeMount(async () => {
               {{
                 paginationMeta(
                   { page: options.page, itemsPerPage: options.itemsPerPage },
-                  severanceList.length
+                  filteredData.length
                 )
               }}
             </p>
             <VPagination
               v-model="options.page"
               :total-visible="$vuetify.display.smAndDown ? 3 : 5"
-              :length="Math.ceil(severanceList.length / options.itemsPerPage)"
+              :length="Math.ceil(filteredData.length / options.itemsPerPage)"
             />
           </div>
         </VCardText>
       </template>
     </VDataTable>
-    <VSnackbar
-      v-model="isaddfaild"
-      location="top"
-      :timeout="3000"
-      color="warning"
-    >
-      <VAlert
-        density="compact"
-        type="warning"
-        title="warning!"
-        text="근속일수가 1년이 안됩니다."
-      />
-    </VSnackbar>
-    <VSnackbar
-      v-model="isSuccessFunc"
-      location="top"
-      :timeout="3000"
-      color="success"
-    >
-      <VAlert
-        density="compact"
-        type="success"
-        title="success!"
-        text="완료되었습니다."
-      />
-    </VSnackbar>
   </VCard>
+  <VSnackbar
+    v-model="isSeverance"
+    location="center"
+    :timeout="3000"
+    color="error"
+  >
+    <VAlert
+      density="compact"
+      type="error"
+      title="error!"
+      text="현재 테이블 데이터가 없습니다."
+    />
+  </VSnackbar>
 </template>
