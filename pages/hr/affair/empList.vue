@@ -11,6 +11,7 @@ const headers = [
   { title: "성별", key: "gender" },
   { title: "부서번호", key: "deptCode" },
   { title: "부서이름", key: "deptName" },
+  { title: "고용상태", key: "retirementDate" },
 ];
 
 const empList = ref([]);
@@ -76,7 +77,6 @@ const filteredEmpList = computed(() => {
           :headers="headers"
           :items="filteredEmpList"
           :items-per-page="10"
-          show-select
         />
       </VCardText>
     </VCard>
