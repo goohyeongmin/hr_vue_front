@@ -21,7 +21,7 @@ const loading = ref(false);
 // 직원 리스트 조회
 const fetchData = async () => {
   try {
-    loading.value = true;
+    loading.value = false;
 
     const response = await axios.get("http://localhost:8282/hr/affair/emp");
 
