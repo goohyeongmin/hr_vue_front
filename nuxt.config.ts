@@ -15,6 +15,8 @@ export default defineNuxtConfig({
   },
 
   css: [
+    'vuetify/styles',//구씨
+    '@mdi/font/css/materialdesignicons.css',//구씨
     "@core/scss/template/index.scss",
     "@styles/styles.scss",
     "@/plugins/iconify/icons.css",
@@ -112,6 +114,7 @@ export default defineNuxtConfig({
 
     build: {
       chunkSizeWarningLimit: 5000,
+      transpile: ['vuetify'] //구씨
     },
 
     optimizeDeps: {

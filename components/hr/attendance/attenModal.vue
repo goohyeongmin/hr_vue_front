@@ -1,12 +1,28 @@
 <script lang="ts" setup>
-import { AttenProps, ItemPropsTypes } from "@/types/attendance/types";
+// import { AttenProps, ItemPropsTypes } from "@/types/attendance/types";
 import { defineEmits, defineProps } from "vue";
 // leave
+
+
+interface ItemPropsTypes {
+  text: string;
+  value: string;
+}
+
+type AttenProps = ItemPropsTypes[];
+
+
+
+
+
 
 const isDialogVisible = ref(false)
 const selectedRest = ref('')
 const selectedRestCode = ref('')
 const selectedRestName = ref('')
+
+
+
 
 
 const leaveProps: AttenProps = [

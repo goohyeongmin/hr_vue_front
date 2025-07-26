@@ -1,3 +1,9 @@
+
+
+
+
+
+
 <script lang="ts" setup>
 import navItems from '@/navigation/vertical'
 import { themeConfig } from '@themeConfig'
@@ -13,6 +19,25 @@ import NavBarI18n from '@core/components/I18n.vue'
 
 // @layouts plugin
 import { VerticalNavLayout } from '@layouts'
+defineProps<{ navMenu: any}>()
+
+// import { useUserStore } from '@/store/hr/affair'
+
+// const userStore = useUserStore()
+
+// const showMessage = (msg : string, type:'error'| 'success' |'info') => {
+//   alert(msg)
+// }
+
+// const handleAttendanceMenuClick = () =>{
+//   if(userStore.inOutSide !== 'i'){
+//     showMessage('일근태 달력에 접근할 권한이 없습니다.','error')
+//     return
+//   }
+// }
+
+
+
 </script>
 
 <template>

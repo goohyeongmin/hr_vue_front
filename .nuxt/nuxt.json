@@ -1,9 +1,9 @@
 {
-  "_hash": "vFfdnpVf5Y",
+  "_hash": "hx6qkuH1MhN9g99zn7Q4aETUQZeFqGu1CzUBBmCk5tI",
   "project": {
-    "rootDir": "C:/Users/82103/Desktop/79HR/HR_nuxt_frontend"
+    "rootDir": "C:/Users/Min99/Desktop/vue_hr/hr_vue_front"
   },
   "versions": {
-    "nuxt": "3.7.4"
+    "nuxt": "3.17.5"
   }
 }

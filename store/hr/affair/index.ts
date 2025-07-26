@@ -16,6 +16,16 @@ import {
   removeAppoint,
   removeEmp,
 } from '@/api/hr/affair'
+import { ref } from 'vue'
+
+
+export const useUserStore = defineStore('user', () => {
+  const currentUser = ref({ name: '', id: '' })
+  const empCode = ref('') // ✅ 이걸 daily.vue에서 사용
+  const inOutSide = ref('')
+  return { currentUser, empCode, inOutSide }
+})
+
 
 export const affairStore = defineStore('affairStore', {
   state: () => ({

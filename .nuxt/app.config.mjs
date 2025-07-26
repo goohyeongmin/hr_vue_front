@@ -1,6 +1,6 @@
 
-import { updateAppConfig } from '#app'
-import { defuFn } from 'C:/Users/82103/Desktop/79HR/HR_nuxt_frontend/node_modules/.pnpm/defu@6.1.2/node_modules/defu/dist/defu.mjs'
+import { _replaceAppConfig } from '#app/config'
+import { defuFn } from 'defu'
 
 const inlineConfig = {
   "nuxt": {}
@@ -9,10 +9,10 @@ const inlineConfig = {
 // Vite - webpack is handled directly in #app/config
 if (import.meta.hot) {
   import.meta.hot.accept((newModule) => {
-    updateAppConfig(newModule.default)
+    _replaceAppConfig(newModule.default)
   })
 }
 
 
 
-export default /* #__PURE__ */ defuFn(inlineConfig)
+export default /*@__PURE__*/ defuFn(inlineConfig)

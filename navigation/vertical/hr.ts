@@ -1,3 +1,12 @@
+// <script setup>
+
+// import { useUserStore } from '@/store/hr/affair'
+// import type { RouteLocationRaw } from 'vue-router'
+
+// const userStore = useUserStore()
+// const router = useRouter()
+
+
 export default [
   { heading: 'hr' },
   {
@@ -175,7 +184,22 @@ export default [
         children: [
           {
             title: '일근태관리',
+            // to: null,
             to: { name: 'hr-attndmgmt-daily' },
+            // meta: { requiresInSide: true}
+            // action: () => {
+            // if (userStore.inOutSide !== 'i') {
+            //      alert('일근태 달력에 접근할 권한이 없습니다.')
+            //       return
+            // }
+            // router.push({ name: 'hr-attndmgmt-daily' })
+            // },
+            // 또는 조건부 렌더링
+            // disable: () => {
+            //   const userStore = useUserStore()
+            //   return userStore.inOutSide !== 'i'
+            // }
+
           },
           {
             title: '월근태관리',

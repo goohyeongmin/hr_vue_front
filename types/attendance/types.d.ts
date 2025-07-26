@@ -11,7 +11,7 @@ type AttenProps = {
 
 
 type DayAttdProps = {
-  empCode: string,
+  empCode: 'string',
   applyDay: string,
   attdTypeCode: string,
   attdTypeName: string,
